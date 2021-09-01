@@ -24,15 +24,25 @@ logic                   data_upd    ;
 always_comb begin
     cntr_upd = 1'b0;
     cntr_nxt = cntr_ff + 1'b1;
+    if (cntr_ff == '0) begin
+        cntr_upd = i_start_tx;
+    end else begin
+        cntr_upd = 'b1;
+        cntr_nxt = (cntr_ff == 'd9) ? '0 : cntr_ff + 1'b1;
+ /*       if (cntr_ff == 'd10) begin
+            cntr_nxt = 'b0;
+        end else begin
+        end*/
+    end
 
-    if ((cntr_ff == '0) & (i_start_tx)) begin
+   /* //if (((cntr_ff == '0) & (i_start_tx)) | cntr_ff) begin
         cntr_upd = 1'b1;
     end else begin
         if (cntr_ff == 'd10) begin
             cntr_upd = 1'b1;
             cntr_nxt = '0;
         end
-    end
+    end*/
 end
 
 always_ff @(posedge i_clk, negedge i_rst_n) begin
@@ -76,7 +86,7 @@ always_comb begin
     if (i_start_tx) begin
         o_uart_tx   = 1'b0;
     end else begin
-        if ((cntr_ff != '0) & (cntr_ff != 'd10)) begin
+        if ((cntr_ff != '0) & (cntr_ff != 'd9)) begin
             o_uart_tx = data_ff[0];
         end
     end

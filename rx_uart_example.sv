@@ -1,12 +1,13 @@
 
-module uart (
+module uart_rx (
     input   logic                   i_clk       ,
     input   logic                   i_rst_n     ,
 
-    input   logic   [7 : 0]         i_data      ,
+    input   logic                   o_uart_tx
     input   logic                   i_start_tx  ,
 
-    output  logic                   o_uart_tx
+    output  logic   [7 : 0]         o_data      ,
+    //output  logic                   i_ready_tx  ,
 );
 
 logic   [3 : 0]         cntr_ff     ;
@@ -83,3 +84,15 @@ always_comb begin
 end
 
 endmodule
+
+//------------------------------
+// uart RX logic
+//------------------------------
+
+/*always_comb begin
+    if (~o_uart_tx) begin
+        for (i = 0; i < 'd7; i++)
+                o_data_ff[i] = o_uart_tx;
+    end*/
+    
+
