@@ -29,20 +29,7 @@ always_comb begin
     end else begin
         cntr_upd = 'b1;
         cntr_nxt = (cntr_ff == 'd9) ? '0 : cntr_ff + 1'b1;
- /*       if (cntr_ff == 'd10) begin
-            cntr_nxt = 'b0;
-        end else begin
-        end*/
     end
-
-   /* //if (((cntr_ff == '0) & (i_start_tx)) | cntr_ff) begin
-        cntr_upd = 1'b1;
-    end else begin
-        if (cntr_ff == 'd10) begin
-            cntr_upd = 1'b1;
-            cntr_nxt = '0;
-        end
-    end*/
 end
 
 always_ff @(posedge i_clk, negedge i_rst_n) begin
